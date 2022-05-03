@@ -13,11 +13,49 @@ const PORT = process.env.PORT || 3001;
 
 const app = express();
 
+var boredApi = {
+    url: 'https://www.boredapi.com/api/activity?type=recreational',
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+        'Accept-Charset': 'utf-8',
+    }
+};
+
+var jokeApi = {
+    url: 'https://v2.jokeapi.dev/joke/Any?contains=friend',
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+        'Accept-Charset': 'utf-8',
+    }
+};
+
+var activity = '';
+
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 app.get("/api", (req, res) => {
-  res.json({ message: "Hello from server!" });
+
+  const activityRepo = new ActivityRepository(dao);
+  activityRepo.createTable();
+
+  resBored = request(boredApi, (err,response,body)=>{
+
+    if (!err){
+           const bored = JSON.parse(body);
+           console.log(bored);
+
+           activity = bored.activity;
+           var jokeWords = activity.split(" ");
+
+           console.log(jokeWords[0]);
+
+       }
+   })
+
+  res.json({ message: activity });
 });
 
 app.listen(PORT, () => {
