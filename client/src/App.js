@@ -35,9 +35,13 @@ function App() {
           <form id="activityForm" onSubmit={ consultar }>
             <div className="col-9"><input name="type" type="input" className="form-control input-sm" id="type" defaultValue="recreational"  /></div>
             <div className="col-9"><input name="submit" type="submit" value="Enviar"/></div>
+
           </form>
 
-        <p>{!data ? "Loading..." : data.activity + " - " + data.joke }</p>
+        <p>{!data ? "Loading..." : "Activity: " + data.activity + " - Joke: " + data.joke }</p>
+
+        <div className="col-9"><a href="/report">Descargar Reporte</a></div>
+
       </header>
     </div>
   );

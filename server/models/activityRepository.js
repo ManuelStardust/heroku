@@ -17,10 +17,7 @@ class ActivityRepository {
   }
 
   getAll() {
-    console.log('aca');
-
     return this.dao.all('SELECT * FROM Activities')
-    console.log('aca');
   }
 }
 

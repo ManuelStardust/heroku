@@ -78,10 +78,15 @@ const api = function(req, res, next) {
 const report = function(req, res, next) {
 
       const activityRepo = new ActivityRepository(dao);
-      reportData = activityRepo.getAll();
-      console.log(reportData);
-      res.json({ data: reportData })
+      reportData = activityRepo.getAll().then(function(rest) {
+        console.log(rest.data);
+          const csv = new ObjectsToCsv(rest);
+            res.setHeader('Content-disposition', 'attachment; filename=data.csv');
+            res.set('Content-Type', 'text/csv');
+            res.status(200).send(csv);
+      });
 }
+
 
 module.exports = {
   api,
