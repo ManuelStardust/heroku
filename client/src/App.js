@@ -1,8 +1,9 @@
 import React from "react";
 //import logo from "./logo.svg";
 import "./App.css";
-//import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import services from "./services"
 
+//import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 
 function App() {
@@ -14,14 +15,27 @@ function App() {
       .then((data) => setData(data));
   }, []);
 
+  const consultar = async (e)  => {
+      e.preventDefault()
+
+        const data = document.getElementById('type').value;
+        const res = await services.actividadesConsultar(data);
+
+        if(res){
+          setData(res);
+        }
+
+    };
+
   return (
     <div className="App">
       <header className="App-header">
         <h2>Bienvenido al sitio de consulta de actividades.</h2>
         <p>Escribe el tipo de la actividad que deseas consultar:</p>
-
-          <div className="col-9"><input name="type" type="input" className="form-control input-sm" id="input" defaultValue="recreational"  /></div>
-          <div className="col-9"><input name="submit" type="submit"/></div>
+          <form id="activityForm" onSubmit={ consultar }>
+            <div className="col-9"><input name="type" type="input" className="form-control input-sm" id="type" defaultValue="recreational"  /></div>
+            <div className="col-9"><input name="submit" type="submit" value="Enviar"/></div>
+          </form>
 
         <p>{!data ? "Loading..." : data.activity + " - " + data.joke }</p>
       </header>
