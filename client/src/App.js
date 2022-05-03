@@ -16,7 +16,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h2>Bienvenido al sitio de consulta de actividades.</h2>
-        <p>Escribe el nombre de la actividad que deseas consultar:</p>
+        <p>Escribe el tipo de la actividad que deseas consultar:</p>
 
           <div className="col-9"><input name="type" type="input" className="form-control input-sm" id="input" defaultValue="recreational"  /></div>
           <div className="col-9"><input name="submit" type="submit"/></div>

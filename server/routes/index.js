@@ -9,7 +9,8 @@ controller.api;
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
-router.get("/", function(req, res, next) { res.render('index', { title: 'hola' } );
+router.get("/", (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 });
 
 router.get("/api", controller.api);
