@@ -10,7 +10,7 @@ controller.api;
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 router.get("/", (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../../client/build', 'index.html'));
 });
 
 router.get("/api", controller.api);
@@ -20,7 +20,7 @@ router.get("/report", controller.report);
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../../client/build', 'index.html'));
 });
 
 module.exports = router;
