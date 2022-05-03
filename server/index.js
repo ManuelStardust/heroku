@@ -1,6 +1,14 @@
 const path = require('path');
 const express = require("express");
 
+const request = require("request");
+const AppDAO = require('./dao')
+
+const dao = new AppDAO('./database.sqlite3')
+const ActivityRepository = require('./activityRepository')
+
+const ObjectsToCsv = require('objects-to-csv')
+
 const PORT = process.env.PORT || 3001;
 
 const app = express();
