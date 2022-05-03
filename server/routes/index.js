@@ -5,7 +5,6 @@ const controller = require('../controllers/mainController');
 
 const app = express();
 
-controller.api;
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
