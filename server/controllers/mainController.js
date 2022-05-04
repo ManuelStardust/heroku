@@ -95,12 +95,15 @@ const getJoke = function(word){
 const report = function(req, res, next) {
 
       const activityRepo = new ActivityRepository(dao);
-      reportData = activityRepo.getAll().then(function(rest) {
-        console.log(rest.data);
-          const csv = new ObjectsToCsv(rest);
-            res.setHeader('Content-disposition', 'attachment; filename=data.csv');
-            res.set('Content-Type', 'text/csv');
-            res.status(200).send(csv);
+
+      return new Promise(resolve => {
+          reportData = activityRepo.getAll().then(function(rest) {
+              let csv = new ObjectsToCsv(rest);
+              csv.toDisk("./server/public/activities.csv");
+          });
+          resolve(reportData);
+       }).then(value => {
+         res.download('./server/public/activities.csv');
       });
 }
 
