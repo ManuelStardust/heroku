@@ -60,14 +60,13 @@ const api = function(req, res, next) {
 
           activityRepo.create(activityData);
 
-          res.json({ activity: activity, joke: joke, error: false, message: message });
-
-        }else{
-          res.json({ activity: activity, joke: joke, error: true, message: message })
         }
       }else{
         activity = "No existen datos para este tipo de actividad.";
+        joke = '';
       }
+
+      res.json({ activity: activity, joke: joke, error: false, message: message });
 
     });
 
