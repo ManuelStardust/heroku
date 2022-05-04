@@ -43,30 +43,32 @@ const api = function(req, res, next) {
         var boredWords = activity.split(" ");
 
         if(boredWords.length > 0){
-          boredWords.map(function(word) {
-           getJoke(word);
-          });
-          if(!joke) joke = 'Esta es una actividad muy aburrida';
+           Promise.all(boredWords.map(function(word) {
+             getJoke(word);
+           })).then(value => {
+             if(!joke) joke = 'Esta es una actividad muy aburrida';
+
+            let ts = Date.now();
+            let date_ob = new Date(ts);
+            let dateNow =  date_ob.getFullYear() + "-" + ("0" + (date_ob.getMonth() + 1)).slice(-2) + "-" + ("0" + date_ob.getDate()).slice(-2);
+
+            activityData = { type: bored.type, activity: bored.activity, key: bored.key, joke: joke, joke_id: jokeResponse.id, date: dateNow }
+
+            activityRepo.create(activityData);
+
+            res.json({ activity: activity, joke: joke, error: false, message: message });
+
+           });
         }
 
-        console.log(joke);
-
-        if(activity && joke){
-          let ts = Date.now();
-          let date_ob = new Date(ts);
-          let dateNow =  date_ob.getFullYear() + "-" + ("0" + (date_ob.getMonth() + 1)).slice(-2) + "-" + ("0" + date_ob.getDate()).slice(-2);
-
-          activityData = { type: bored.type, activity: bored.activity, key: bored.key, joke: joke, joke_id: jokeResponse.id, date: dateNow }
-
-          activityRepo.create(activityData);
-
-        }
       }else{
         activity = "No existen datos para este tipo de actividad.";
         joke = '';
+
+        res.json({ activity: activity, joke: joke, error: false, message: message });
+
       }
 
-      res.json({ activity: activity, joke: joke, error: false, message: message });
 
     });
 
